@@ -150,8 +150,13 @@ include('layout/admin/datos_usuario_sesion.php');
                                                                             $('#nit_ci<?php echo $id_map;?>').focus();
                                                                         }
                                                                         else{
-                                                                            var url = 'tickets/controller_registrar_ticket.php';
-                                                                            $.get(url, {placa:placa, nombre_cliente:nombre_cliente, nit_ci:nit_ci, fecha_ingreso:fecha_ingreso, hora_ingreso:hora_ingreso, espacio:espacio, user_sesion:user_sesion}, function(datos) {
+                                                                            var url_1 = 'parking/controller_cambiar_estado_ocupado.php';
+                                                                            $.get(url_1, {espacio:espacio}, function (datos) {
+                                                                                $('#respuesta_ticket').html(datos);
+                                                                            });
+
+                                                                            var url_2 = 'tickets/controller_registrar_ticket.php';
+                                                                            $.get(url_2, {placa:placa, nombre_cliente:nombre_cliente, nit_ci:nit_ci, fecha_ingreso:fecha_ingreso, hora_ingreso:hora_ingreso, espacio:espacio, user_sesion:user_sesion}, function(datos) {
                                                                                 $('#respuesta_ticket').html(datos);
                                                                             });
                                                                         }
