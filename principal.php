@@ -104,7 +104,7 @@ include('layout/admin/datos_usuario_sesion.php');
                                                                     $mes = date('m');
                                                                     $ano = date('Y');
                                                                     ?>
-                                                                    <input type="date" class="form-control" value="<?php echo $ano."-".$mes."-".$dia; ?>">
+                                                                    <input type="date" class="form-control" id="fecha_ingreso<?php echo $id_map;?>" value="<?php echo $ano."-".$mes."-".$dia; ?>">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -116,12 +116,32 @@ include('layout/admin/datos_usuario_sesion.php');
                                                                     $hora = date('H');
                                                                     $minutos = date('i');
                                                                     ?>
-                                                                    <input type="time" class="form-control" value="<?php echo $hora.":".$minutos; ?>">
+                                                                    <input type="time" class="form-control" id="hora_ingreso<?php echo $id_map;?>" value="<?php echo $hora.":".$minutos; ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="staticEmail" class="col-sm-4 col-form-label">Espacio:</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="text" class="form-control" id="espacio<?php echo $id_map;?>" value="<?php echo $nro_espacio; ?>" >
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                                <button type="button" class="btn btn-primary">Imprimir Ticket</button>
+                                                                <button type="button" class="btn btn-primary" id="btn_registrar_ticket<?php echo $id_map;?>">Imprimir Ticket</button>
+                                                                <script>
+                                                                    $('#btn_registrar_ticket<?php echo $id_map;?>').click(function () {
+                                                                        // alert("Hola Ticket");
+                                                                        var placa = $('#placa_buscar<?php echo $id_map; ?>').val();
+                                                                        var nombre_cliente = $('#nombre_cliente<?php echo $id_map;?>').val();
+                                                                        var nit_ci = $('#nit_ci<?php echo $id_map;?>').val();
+                                                                        var fecha_ingreso = $('#fecha_ingreso<?php echo $id_map;?>').val();
+                                                                        var hora_ingreso = $('#hora_ingreso<?php echo $id_map;?>').val();
+                                                                        var espacio = $('#espacio<?php echo $id_map;?>').val();
+
+                                                                        // alert(placa+'-'+espacio);
+
+                                                                    });
+                                                                </script>
                                                             </div>
                                                         </div>
                                                     </div>
