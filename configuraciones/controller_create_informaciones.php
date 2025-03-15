@@ -1,0 +1,45 @@
+<?php
+include('../app/config.php');
+
+$nombre_parqueo = $_GET['nombre_parqueo'];
+$nombre_parqueo = strtoupper($nombre_parqueo);// CONVIERTE TODO A MAYÚCULAS
+$actividad_empresa = $_GET['actividad_empresa'];
+$actividad_empresa = strtoupper($actividad_empresa);// CONVIERTE TODO A MAYÚCULAS
+$sucursal = $_GET['sucursal'];
+$direccion = $_GET['direccion'];
+$direccion = strtoupper($direccion);// CONVIERTE TODO A MAYÚCULAS
+$zona = $_GET['zona'];
+$zona = strtoupper($zona);// CONVIERTE TODO A MAYÚCULAS
+$telefono = $_GET['telefono'];
+$departamento_ciudad = $_GET['departamento_ciudad'];
+$departamento_ciudad = strtoupper($departamento_ciudad);// CONVIERTE TODO A MAYÚCULAS
+$pais = $_GET['pais'];
+$pais = strtoupper($pais);// CONVIERTE TODO A MAYÚCULAS
+
+date_default_timezone_set("Europe/Madrid");
+$fechaHora = date("Y-m-d h:i:s");
+
+$sentencia = $pdo->prepare('INSERT INTO tb_informaciones 
+(nombre_parqueo, actividad_empresa, sucursal, direccion, zona, telefono, departamento_ciudad, pais, fyh_creacion, estado)
+VALUES ( :nombre_parqueo, :actividad_empresa, :sucursal, :direccion, :zona, :telefono, :departamento_ciudad, :pais, :fyh_creacion, :estado)');
+
+$sentencia->bindParam(':nombre_parqueo', $nombre_parqueo);
+$sentencia->bindParam(':actividad_empresa', $actividad_empresa);
+$sentencia->bindParam(':sucursal', $sucursal);
+$sentencia->bindParam(':direccion', $direccion);
+$sentencia->bindParam(':zona', $zona);
+$sentencia->bindParam(':telefono', $telefono);
+$sentencia->bindParam(':departamento_ciudad', $departamento_ciudad);
+$sentencia->bindParam(':pais', $pais);
+$sentencia->bindParam('fyh_creacion', $fechaHora);
+$sentencia->bindParam('estado', $estado_del_registro);
+
+if($sentencia->execute()){
+    echo 'success';
+    // header('Location:' .$URL.'/');
+    ?>
+    <script>location.href = "informaciones.php";</script>
+    <?php
+}else{
+    echo 'Error al registrar a la Base de Datos';
+}
