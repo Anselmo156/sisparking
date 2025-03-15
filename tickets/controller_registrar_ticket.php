@@ -2,8 +2,12 @@
 
 include('../app/config.php');
 
+$placa = $_GET['placa'];
+$placa = strtoupper($placa);// CONVIERTE TODO A MAYÚSCULAS
 $nombre_cliente = $_GET['nombre_cliente'];
+$nombre_cliente = strtoupper($nombre_cliente);// CONVIERTE TODO A MAYÚSCULAS
 $nit_ci = $_GET['nit_ci'];
+$nit_ci = strtoupper($nit_ci);// CONVIERTE TODO A MAYÚSCULAS
 $espacio = $_GET['espacio'];
 $fecha_ingreso = $_GET['fecha_ingreso'];
 $hora_ingreso = $_GET['hora_ingreso'];
@@ -13,9 +17,10 @@ date_default_timezone_set("Europe/Madrid");
 $fechaHora = date("Y-m-d H:i:s");
 
 $sentencia = $pdo->prepare('INSERT INTO tb_tickets
-(nombre_cliente,nit_ci,espacio,fecha_ingreso,hora_ingreso,user_sesion, fyh_creacion, estado)
-VALUES ( :nombre_cliente,:nit_ci,:espacio,:fecha_ingreso,:hora_ingreso,:user_sesion,:fyh_creacion,:estado)');
+(placa_auto, nombre_cliente,nit_ci,espacio,fecha_ingreso,hora_ingreso,user_sesion, fyh_creacion, estado)
+VALUES ( :placa_auto, :nombre_cliente,:nit_ci,:espacio,:fecha_ingreso,:hora_ingreso,:user_sesion,:fyh_creacion,:estado)');
 
+$sentencia->bindParam(':placa_auto', $placa);
 $sentencia->bindParam(':nombre_cliente',$nombre_cliente);
 $sentencia->bindParam(':nit_ci',$nit_ci);
 $sentencia->bindParam(':espacio',$espacio);
