@@ -3,9 +3,8 @@
 include('../app/config.php');
 
 $placa = $_GET['placa'];
-$id_map = $_GET['id_map'];
-
 $placa = strtoupper($placa); // CONVIERTE TODO A MAYÚCULAS
+$id_map = $_GET['id_map'];
 
 // echo "Buscando la Matrícula ".$placa;
 
@@ -28,14 +27,14 @@ if($nombre_cliente == ""){
     <div class="form-group row">
         <label for="staticEmail" class="col-sm-3 col-form-label">Nombre:<span><b style="color: red">*</b></span> </label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" id="nombre_cliente<?php echo $id_map;?>">
+            <input type="text" style="text-transform: uppercase" class="form-control" id="nombre_cliente<?php echo $id_map;?>">
         </div>
     </div>
 
     <div class="form-group row">
         <label for="staticEmail" class="col-sm-3 col-form-label">DNI/CIF: <span><b style="color: red">*</b></span></label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" id="nit_ci<?php echo $id_map;?>">
+            <input type="text" style="text-transform: uppercase"  class="form-control" id="nit_ci<?php echo $id_map;?>">
         </div>
     </div>
 <?php
@@ -45,15 +44,47 @@ if($nombre_cliente == ""){
     <div class="form-group row">
         <label for="staticEmail" class="col-sm-3 col-form-label">Nombre: <span><b style="color: red">*</b></span></label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" id="nombre_cliente<?php echo $id_map;?>" value="<?php echo $nombre_cliente; ?>">
+            <input type="text" class="form-control" style="text-transform: uppercase" id="nombre_cliente<?php echo $id_map;?>" value="<?php echo $nombre_cliente; ?>">
         </div>
     </div>
 
     <div class="form-group row">
         <label for="staticEmail" class="col-sm-3 col-form-label">DNI/CIF: <span><b style="color: red">*</b></span></label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" id="nit_ci<?php echo $id_map;?>" value="<?php echo $nit_ci_cliente; ?>" >
+            <input type="text" class="form-control" style="text-transform: uppercase" id="nit_ci<?php echo $id_map;?>" value="<?php echo $nit_ci_cliente; ?>" >
         </div>
     </div>
 <?php
 }
+
+// BUSCA LA PLACA EN LA TABLA TICKETS
+$contador_ticket = 0;
+$query_tickets = $pdo->prepare("SELECT * FROM tb_tickets WHERE placa_auto = '$placa' AND estado_ticket = 'OCUPADO' AND estado = '1'  ");
+$query_tickets->execute();
+$datos_tickets = $query_tickets->fetchAll(PDO::FETCH_ASSOC);
+foreach($datos_tickets as $datos_ticket){
+    $contador_ticket = $contador_ticket + 1;
+}
+if($contador_ticket == "0"){
+    // echo "no hay ningun registro igual";
+    ?>
+    <div class="alert alert-success">
+        No hay ningun registro igual
+    </div>
+    <script>
+        $('#btn_registrar_ticket<?php echo $id_map;?>').removeAttr('disabled');
+    </script>
+    <?php
+}else{
+    // echo "este vehículo ya esta dentro del parking";
+    ?>
+    <div class="alert alert-danger">
+        Este vehículo ya esta dentro del parking
+    </div>
+    <script>
+        $('#btn_registrar_ticket<?php echo $id_map;?>').attr('disabled', 'disabled');
+    </script>
+<?php
+}
+
+?>

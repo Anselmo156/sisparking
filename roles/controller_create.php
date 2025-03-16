@@ -3,6 +3,7 @@
 include('../app/config.php');
 
 $nombre = $_GET['nombre'];
+$nombre = strtoupper($nombre);// CONVIERTE TODO A MAYÚCULAS
 
 date_default_timezone_set("Europe/Madrid");
 $fechaHora = date("Y-m-d h:i:s");

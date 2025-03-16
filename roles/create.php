@@ -24,7 +24,7 @@ include('../layout/admin/datos_usuario_sesion.php');
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre">
+                                    <input type="text" style="text-transform: uppercase" class="form-control" id="nombre">
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary" id="btn_guardar">Guardar</button>
